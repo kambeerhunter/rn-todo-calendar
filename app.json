@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Simple Task Calendar",
+    "slug": "simple-task-calendar",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "platforms": [
+      "android"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.kambeerhunterdev.simple-calendar-task-rn",
+      "supportsTablet": true,
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.kambeerhunterdev.simple_calendar_task_rn",
+      "versionCode": 1,
+      "permissions": [
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    }
+  }
+}
