@@ -22,7 +22,7 @@ export type TodoImportType = {
   text: string;
 };
 
-type TodoStateElemType = {
+export type TodoStateElemType = {
   list: Array<TodoType>;
   resolved: boolean;
 };

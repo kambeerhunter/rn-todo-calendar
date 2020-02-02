@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { THEME } from '../theme';
@@ -8,22 +8,31 @@ type FilterPanelProps = {
 };
 
 export const FilterPanel: React.FC<FilterPanelProps> = ({ onClickHandler }) => {
+  const [activeFilter, setActiveFilter] = useState(null);
   const showResolved = useCallback(() => {
+    setActiveFilter(false);
     onClickHandler(false);
   }, [onClickHandler]);
 
   const showUnresolved = useCallback(() => {
+    setActiveFilter(true);
     onClickHandler(true);
   }, [onClickHandler]);
 
   const showAll = useCallback(() => {
+    setActiveFilter(null);
     onClickHandler(null);
   }, [onClickHandler]);
 
   return (
     <View style={styles.wrapper}>
       <TouchableOpacity onPress={showAll}>
-        <Ionicons name="ios-list-box" size={48} color={THEME.mainColor} />
+        <Ionicons
+          name="ios-list-box"
+          size={48}
+          color={THEME.mainColor}
+          style={activeFilter === null ? styles.active : styles.inactive}
+        />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={showResolved}>
@@ -31,6 +40,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ onClickHandler }) => {
           name="ios-checkmark-circle-outline"
           size={48}
           color={THEME.resolveColor}
+          style={activeFilter === false ? styles.active : styles.inactive}
         />
       </TouchableOpacity>
 
@@ -39,6 +49,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ onClickHandler }) => {
           name="ios-close-circle-outline"
           size={48}
           color={THEME.unresolveColor}
+          style={activeFilter === true ? styles.active : styles.inactive}
         />
       </TouchableOpacity>
     </View>
@@ -47,9 +58,14 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({ onClickHandler }) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    flexDirection: "row",
+    flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    // marginTop: 15,
+  },
+  inactive: {
+    opacity: 0.4,
+  },
+  active: {
+    opacity: 1,
   },
 });

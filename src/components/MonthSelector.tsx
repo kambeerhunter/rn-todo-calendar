@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 
 import { RootState } from '../store/reducers';
-import { humanMonth } from '../utils';
+import { humanMonth } from '../constants';
 import { increaseMonth, decreaseMonth, resetDate } from '../actions/dates';
 import { THEME } from '../theme';
 
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   },
   resetButton: {
     flexDirection: 'row',
-    width: '50%',
     justifyContent: "flex-start",
     alignItems: 'center',
     borderRadius: 10,
