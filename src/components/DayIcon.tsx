@@ -1,6 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { THEME } from '../theme';
+import { weekdays } from '../constants';
 
 type DayPropsType = {
   day: number;
@@ -47,7 +48,14 @@ export const DayIcon: React.FC<DayPropsType> = ({
     };
   };
 
-  const appliedStyled = dayStyles();
+  const appliedStyled = useMemo(() => dayStyles(), [dayStyles]);
+
+  const weekday = useMemo(() => {
+    if (year && month && day) {
+      return weekdays[new Date(year, month - 1, day).getDay()];
+    }
+    return null;
+  }, []);
 
   const openHandler = useCallback(() => {
     onOpen(day, month, year);
@@ -57,6 +65,7 @@ export const DayIcon: React.FC<DayPropsType> = ({
     <TouchableOpacity activeOpacity={0.5} onPress={openHandler} key={day}>
       <View style={appliedStyled}>
         <Text style={styles.dayText}>{day}</Text>
+        <Text style={styles.weekday}>{weekday}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -67,11 +76,11 @@ const styles = StyleSheet.create({
     borderColor: THEME.borderColor,
     borderWidth: 3,
     borderRadius: 10,
-    width: 65,
-    height: 65,
+    width: 62,
+    height: 62,
     marginHorizontal: 5,
     marginBottom: 15,
-    paddingTop: 10,
+    paddingTop: 5,
   },
   resolveDay: {
     borderColor: THEME.resolveColor,
@@ -87,4 +96,9 @@ const styles = StyleSheet.create({
   nowStyles: {
     backgroundColor: '#d6b7ff',
   },
+  weekday: {
+    width: '100%',
+    textAlign: 'center',
+    fontSize: 14,
+  }
 });
