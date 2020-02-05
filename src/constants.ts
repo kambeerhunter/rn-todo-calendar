@@ -1,4 +1,4 @@
-export const weekdays = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+export const weekdays = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
 
 export const humanMonth = {
   1: 'Январь',
