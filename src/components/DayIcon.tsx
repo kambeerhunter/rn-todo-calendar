@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans-bold',
     fontSize: 24,
     textAlign: 'center',
+    lineHeight: 30,
   },
   nowStyles: {
     backgroundColor: '#d6b7ff',
@@ -100,5 +101,6 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     fontSize: 14,
+    lineHeight: 14,
   }
 });

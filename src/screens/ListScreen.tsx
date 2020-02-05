@@ -13,7 +13,7 @@ import { sortByDate } from '../utils';
 
 export const ListScreen: NavigationStackScreenComponent = () => {
   const dispatch = useDispatch();
-  const { month, year } = useSelector((state: RootState) => state.dates)
+  const { month, year } = useSelector((state: RootState) => state.dates);
   useEffect(() => {
     dispatch(getTodosByMonth(month, year));
   }, [dispatch, month, year]);
@@ -28,14 +28,43 @@ export const ListScreen: NavigationStackScreenComponent = () => {
     [setFilter]
   );
 
-  const filteredList: Array<{ date: string; list: TodoType[] }> = useMemo(
-    () =>
-      sortedKeys.map(date => ({
-        date: date,
-        list: fullList[date].list.filter(i => i.resolved !== filter),
-      })),
-    [filter, fullList]
-  );
+  const filteredList: Array<{
+    date: string;
+    list: TodoType[];
+  }> = useMemo(() => {
+    const result = [];
+    sortedKeys.forEach(date => {
+      const list = fullList[date].list.filter(i => i.resolved !== filter);
+      if (list.length !== 0) {
+        result.push({
+          date,
+          list,
+        });
+      }
+    });
+    return result;
+  }, [filter, fullList]);
+
+  const renderTodoList = useCallback(() => {
+    return filteredList.map(({ date, list }) => {
+      if (list.length > 0) {
+        return (
+          <View style={styles.titleWrapper} key={date}>
+            <Text style={styles.center}>
+              {new Date(date).toLocaleDateString('en-GB')}
+            </Text>
+
+            <View>
+              {list.map(todo => (
+                <TodoItem key={todo.id} todo={todo} />
+              ))}
+            </View>
+          </View>
+        );
+      }
+      return null;
+    });
+  }, [filteredList]);
 
   return (
     <View>
@@ -55,24 +84,7 @@ export const ListScreen: NavigationStackScreenComponent = () => {
             } дел пуст`}</Text>
           )}
 
-          {filteredList.map(({ date, list }) => {
-            if (list.length > 0) {
-              return (
-                <View style={styles.titleWrapper} key={date}>
-                  <Text style={styles.center}>
-                    {new Date(date).toLocaleDateString('en-GB')}
-                  </Text>
-
-                  <View>
-                    {list.map(todo => (
-                      <TodoItem key={todo.id} todo={todo} />
-                    ))}
-                  </View>
-                </View>
-              );
-            }
-            return null;
-          })}
+          {renderTodoList()}
         </View>
       </ScrollView>
     </View>
